@@ -20,7 +20,20 @@ public class GlobalExceptionHandler {
     Map<String, String> errors = new HashMap<>();//collects all the errors
         //extract and collect validation errors
         exception.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
-
+    /*
+    * exception.getBindingResult()
+→ Gets the binding/validation results from the thrown exception — it contains all the validation info.
+getFieldErrors()
+→ Returns a List<FieldError> — one item for each invalid field in your DTO.
+.forEach(error -> …)
+→ Loops over that list.
+error.getField()
+→ Returns the name of the field that failed validation (e.g. "email").
+error.getDefaultMessage()
+→ Returns the human-readable message from your validation annotation (e.g. "must not be blank").
+errors.put(field, message)
+→ Adds that pair to your map.
+    * */
         return ResponseEntity.badRequest().body(errors);
     }
 }
