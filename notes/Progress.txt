@@ -194,3 +194,43 @@ Response file saved.
 > 2025-10-27T175221.400.json
 
 But this response is giving oo many details - like names of the DTOs. what if we want to remove all this from response.
+
+So now we added that error handling class - check out below bad request response now
+
+POST http://localhost:4000/patients
+
+HTTP/1.1 400
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 27 Oct 2025 22:22:37 GMT
+Connection: close
+
+{
+  "email": "Email is required"
+}
+Response file saved.
+> 2025-10-27T182237.400.json
+
+If multiple fields are missing then :
+
+POST http://localhost:4000/patients
+
+HTTP/1.1 400
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 27 Oct 2025 22:24:00 GMT
+Connection: close
+
+{
+  "address": "Address is required",
+  "email": "Email is required"
+}
+Response file saved.
+> 2025-10-27T182400.400.json
+
+Response code: 400; Time: 7ms (7 ms); Content length: 61 bytes (61 B)
+
+NOW WE MOVE TO BUSINESS LOGIC VALIDATION
+
+So all business login validation needs to be within the PatientRepository class.
+

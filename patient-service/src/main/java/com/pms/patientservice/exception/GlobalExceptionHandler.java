@@ -36,4 +36,12 @@ errors.put(field, message)
     * */
         return ResponseEntity.badRequest().body(errors);
     }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<Map<String,String>> handleEmailAlreadyExistsException(EmailAlreadyExistsException exception) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("email", "Email address already exists");
+        return ResponseEntity.badRequest().body(errors);
+
+    }
 }
