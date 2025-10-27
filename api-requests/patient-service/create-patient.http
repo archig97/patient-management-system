@@ -1,0 +1,13 @@
+
+POST http://localhost:4000/patients
+Content-Type: application/json
+
+{
+  "name": "Archi G",
+  "email": "",
+  "address": "123 Main Street",
+  "dateOfBirth": "1997-09-19",
+  "registeredDate": "2025-10-27"
+}
+
+###

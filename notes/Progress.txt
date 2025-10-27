@@ -1,0 +1,196 @@
+
+10/27
+
+GET request to get patients is running. (initially was giving 500 error yesterday)
+
+HTTP/1.1 200
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 27 Oct 2025 21:20:25 GMT
+
+[
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "address": "123 Main St, Springfield",
+    "birthDate": "1985-06-15"
+  },
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174001",
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "address": "456 Elm St, Shelbyville",
+    "birthDate": "1990-09-23"
+  },
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174002",
+    "name": "Alice Johnson",
+    "email": "alice.johnson@example.com",
+    "address": "789 Oak St, Capital City",
+    "birthDate": "1978-03-12"
+  },
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174003",
+    "name": "Bob Brown",
+    "email": "bob.brown@example.com",
+    "address": "321 Pine St, Springfield",
+    "birthDate": "1982-11-30"
+  },
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174004",
+    "name": "Emily Davis",
+    "email": "emily.davis@example.com",
+    "address": "654 Maple St, Shelbyville",
+    "birthDate": "1995-02-05"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174005",
+    "name": "Michael Green",
+    "email": "michael.green@example.com",
+    "address": "987 Cedar St, Springfield",
+    "birthDate": "1988-07-25"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174006",
+    "name": "Sarah Taylor",
+    "email": "sarah.taylor@example.com",
+    "address": "123 Birch St, Shelbyville",
+    "birthDate": "1992-04-18"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174007",
+    "name": "David Wilson",
+    "email": "david.wilson@example.com",
+    "address": "456 Ash St, Capital City",
+    "birthDate": "1975-01-11"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174008",
+    "name": "Laura White",
+    "email": "laura.white@example.com",
+    "address": "789 Palm St, Springfield",
+    "birthDate": "1989-09-02"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174009",
+    "name": "James Harris",
+    "email": "james.harris@example.com",
+    "address": "321 Cherry St, Shelbyville",
+    "birthDate": "1993-11-15"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174010",
+    "name": "Emma Moore",
+    "email": "emma.moore@example.com",
+    "address": "654 Spruce St, Capital City",
+    "birthDate": "1980-08-09"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174011",
+    "name": "Ethan Martinez",
+    "email": "ethan.martinez@example.com",
+    "address": "987 Redwood St, Springfield",
+    "birthDate": "1984-05-03"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174012",
+    "name": "Sophia Clark",
+    "email": "sophia.clark@example.com",
+    "address": "123 Hickory St, Shelbyville",
+    "birthDate": "1991-12-25"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174013",
+    "name": "Daniel Lewis",
+    "email": "daniel.lewis@example.com",
+    "address": "456 Cypress St, Capital City",
+    "birthDate": "1976-06-08"
+  },
+  {
+    "id": "223e4567-e89b-12d3-a456-426614174014",
+    "name": "Isabella Walker",
+    "email": "isabella.walker@example.com",
+    "address": "789 Willow St, Springfield",
+    "birthDate": "1987-10-17"
+  }
+]
+Response file saved.
+> 2025-10-27T172025.200.json
+
+Response code: 200; Time: 212ms (212 ms); Content length: 2483 bytes (2.48 kB)
+
+Now I am creating a PatientRequestDTO and have a service which will convert DTO to Entity
+
+non-static method <S>save(S) cannot be referenced from a static context - why am I getting this issue when I try to run this line - Patient newPatient = PatientRepository.save(PatientMapper.toPatient(patientRequestDTO));
+
+turns out it was because i was calling the save method on the class instead of the object.
+
+Auto generated id also works for POST request
+
+POST http://localhost:4000/patients
+
+HTTP/1.1 200
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 27 Oct 2025 21:50:15 GMT
+
+{
+  "id": "82cf2841-49bd-4906-8cbd-1d11450ae05a",
+  "name": "Archi G",
+  "email": "archig@lfg.com",
+  "address": "123 Main Street",
+  "birthDate": "1997-09-19"
+}
+Response file saved.
+> 2025-10-27T175015.200.json
+
+testing null email
+
+Got Bad Request code as expected
+
+HTTP/1.1 400
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Mon, 27 Oct 2025 21:52:21 GMT
+Connection: close
+
+{
+  "timestamp": "2025-10-27T21:52:21.853+00:00",
+  "status": 400,
+  "error": "Bad Request",
+  "trace": "org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.pms.patientservice.dto.PatientResponseDTO> com.pms.patientservice.controller.PatientController.createPatient(com.pms.patientservice.dto.PatientRequestDTO): [Field error in object 'patientRequestDTO' on field 'email': rejected value []; codes [NotBlank.patientRequestDTO.email,NotBlank.email,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [patientRequestDTO.email,email]; arguments []; default message [email]]; default message [Email is required]] \n\tat org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.resolveArgument(RequestResponseBodyMethodProcessor.java:144)\n\tat org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)\n\tat org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:224)\n\tat org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:178)\n\tat org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)\n\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)\n\tat org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)\n\tat org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)\n\tat org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)\n\tat org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)\n\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)\n\tat org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)\n\tat org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)\n\tat jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\n\tat org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)\n\tat org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)\n\tat org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)\n\tat org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)\n\tat org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)\n\tat org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)\n\tat org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)\n\tat org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)\n\tat org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\n\tat org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)\n\tat org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)\n\tat org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)\n\tat org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)\n\tat org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)\n\tat org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)\n\tat org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)\n\tat org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)\n\tat java.base/java.lang.Thread.run(Thread.java:1575)\n",
+  "message": "Validation failed for object='patientRequestDTO'. Error count: 1",
+  "errors": [
+    {
+      "codes": [
+        "NotBlank.patientRequestDTO.email",
+        "NotBlank.email",
+        "NotBlank.java.lang.String",
+        "NotBlank"
+      ],
+      "arguments": [
+        {
+          "codes": [
+            "patientRequestDTO.email",
+            "email"
+          ],
+          "arguments": null,
+          "defaultMessage": "email",
+          "code": "email"
+        }
+      ],
+      "defaultMessage": "Email is required",
+      "objectName": "patientRequestDTO",
+      "field": "email",
+      "rejectedValue": "",
+      "bindingFailure": false,
+      "code": "NotBlank"
+    }
+  ],
+  "path": "/patients"
+}
+Response file saved.
+> 2025-10-27T175221.400.json
+
+But this response is giving oo many details - like names of the DTOs. what if we want to remove all this from response.

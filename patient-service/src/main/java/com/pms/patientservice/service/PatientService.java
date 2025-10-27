@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.pms.patientservice.dto.PatientRequestDTO;
 import com.pms.patientservice.dto.PatientResponseDTO;
 import com.pms.patientservice.mapper.PatientMapper;
 import com.pms.patientservice.model.Patient;
@@ -24,5 +25,11 @@ public class PatientService {
         List<PatientResponseDTO> patientResponseDTOs = patients.stream().map(PatientMapper::toPatientResponseDTO).toList();
 
         return patientResponseDTOs;
+    }
+
+    public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
+        Patient newPatient = patientRepository.save(PatientMapper.toPatient(patientRequestDTO));
+
+        return PatientMapper.toPatientResponseDTO(newPatient);
     }
 }
