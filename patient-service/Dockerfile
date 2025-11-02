@@ -1,16 +1,17 @@
-FROM maven:3.9.9-eclipse-temurin-21 AS builder
+FROM maven:3.9.9-eclipse-temurin-23 AS builder
 
 WORKDIR /app
 
 COPY pom.xml .
 
-RUN mvn:dependency:go-offline -B
+RUN mvn -B dependency:go-offline
+
 
 COPY src ./src
 
 RUN mvn clean package
 
-FROM openjdk:21-jdk as runner
+FROM openjdk:23-jdk as runner
 
 WORKDIR /app
 
