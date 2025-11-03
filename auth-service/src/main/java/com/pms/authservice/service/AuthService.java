@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.pms.authservice.dto.LoginRequestDTO;
 import com.pms.authservice.model.User;
+import com.pms.authservice.util.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +13,17 @@ public class AuthService {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public AuthService(UserService userService, PasswordEncoder passwordEncoder) {
+    public AuthService(UserService userService, PasswordEncoder passwordEncoder,JwtUtil jwtUtil) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
     //if password matches, it is encodedgit add .
 
     public Optional<String> authenticate(LoginRequestDTO loginRequestDTO) {
-        Optional<User> user=userService
+        Optional<String> token=userService
                 .findByEmail(loginRequestDTO.getEmail())
                 .filter(u -> passwordEncoder.matches(loginRequestDTO.getPassword(),u.getPassword()))
                 .map(u -> jwtUtil.generateToken(u.getEmail(),u.getRole()));

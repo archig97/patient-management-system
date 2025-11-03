@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.pms.authservice.dto.LoginRequestDTO;
 import com.pms.authservice.dto.LoginResponseDTO;
+import com.pms.authservice.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
+    private final AuthService authService;
 
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
     @Operation(summary = "Generate token on user login")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(
