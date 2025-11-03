@@ -18,7 +18,7 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
     //if password matches, it is encodedgit add .
-    git commit -m ""
+
     public Optional<String> authenticate(LoginRequestDTO loginRequestDTO) {
         Optional<User> user=userService
                 .findByEmail(loginRequestDTO.getEmail())
