@@ -3,11 +3,11 @@ POST http://localhost:4000/patients
 Content-Type: application/json
 
 {
-  "name": "Arka G 64",
-  "email": "arkapg@gmail.com",
-  "address": "3459 Main Street",
-  "dateOfBirth": "1985-06-24",
-  "registeredDate": "2025-10-27"
+  "name": "Arka G 64 DB Block",
+  "email": "bips@gmail.com",
+  "address": "32 Park Street",
+  "dateOfBirth": "1967-06-24",
+  "registeredDate": "2024-10-27"
 }
 
 ###
