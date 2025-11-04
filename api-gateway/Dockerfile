@@ -11,7 +11,7 @@ COPY src ./src
 
 RUN mvn clean package
 
-FROM openjdk:23-jdk AS runner
+FROM eclipse-temurin:23-jdk AS runner
 
 WORKDIR /app
 
